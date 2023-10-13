@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="nav_u">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="1 1 1" />
+      </geometry>
+      <origin xyz="0 0 0.5" />
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1 1 1" />
+      </geometry>
+      <origin xyz="0 0 0.5" />
+    </collision>
+    <inertial>
+      <mass value="10.0" />
+      <inertia ixx="1e-3" ixy="0.0" ixz="0.0" iyy="1e-3" iyz="0.0" izz="1e-3" />
+    </inertial>
+  </link>
+  <gazebo reference="base_link">
+    <mu1 value="0.0" />
+    <mu2 value="0.0" />
+    <kp value="10000000.0" />
+    <kd value="1.0" />
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo>
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+      <ros>
+        <namespace>/robot</namespace>
+        <update_rate>5.0</update_rate>
+      </ros>
+    </plugin>
+    <plugin name="planar" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_link</robotBaseFrame>
+    </plugin>
+  </gazebo>
+</robot>
